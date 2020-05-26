@@ -15,6 +15,8 @@ class GeenstijSpider(scrapy.Spider):
 
     def parse(self, response):
         for news in response.xpath("//article[@id]"):
+            # url = 'https://www.geenstijl.nl/'
+            # url_sub = news.xpath("//div[@class='col-xs-12']/h1/a/@href").extract_first()
 
             yield {
                 'article_id': news.css('article').attrib['id'],
@@ -25,5 +27,6 @@ class GeenstijSpider(scrapy.Spider):
                 'image': news.xpath("div[@class='col-xs-12']/div[@class='article_content']/p[@class='puu-vsl']/img/@src").extract_first(),
                 'reactions': news.xpath("div[@class='art-footer']/div[@class='col-xs-12 col-sm-7']/a[@id='comment-count']/text()").extract_first()[0:2],
                 'author': news.xpath("div[@class='art-footer']/div[@class='col-xs-12 col-sm-7']/a[1]/text()").extract_first(),
-
+                'doctype': 'geenstijl.nl',
+                'url': 'https://www.geenstijl.nl/'+ news.xpath("div[@class='col-xs-12']/h1/a/@href").extract_first(),
             }
