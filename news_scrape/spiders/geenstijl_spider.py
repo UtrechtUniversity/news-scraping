@@ -55,30 +55,35 @@ class GeenstijSpider(scrapy.Spider):
 
         title = response.xpath("//div[@class='col-xs-12']/h1/text()").get()
 
+
         article_info = response.xpath("//div[@class='article-intro']/p/text()").get()
 
-        article_body= response.xpath("//div[@class='article_content']/p//text()").getall()
+        article_body = response.xpath("//div[@class='article_content']/p//text()").getall()
         article_body_str = ''.join(str(e) for e in article_body)
 
-        try:
-            footer= self.remove_tags(response.xpath("//div[@class='art-footer']/div[@class='col-xs-12 col-sm-7']").get())
-            footer_clean = self.clean(footer)
-            date = self.date_func(footer_clean)
-            publication_date = ''.join(str(e) for e in date)
-            time = self.time_func(footer_clean)
-            publication_time= ''.join(str(e) for e in time)
-        except:
-            print('**********************************')
+        footer= self.remove_tags(response.xpath("//div[@class='art-footer']/div[@class='col-xs-12 col-sm-7']").get())
+        footer_clean = self.clean(footer)
+        date = self.date_func(footer_clean)
+        publication_date = ''.join(str(e) for e in date)
+
+        time = self.time_func(footer_clean)
+        publication_time= ''.join(str(e) for e in time)
+
 
         created_at = datetime.datetime.now()
-        try:
-            image = response.xpath("//div[@class='article_content']/*/img/@src").getall()
-        except:
-            print("title:", title, "Oops!  That was no valid number.  Try again...")
+
+        image = response.xpath("//div[@class='article_content']/*/img/@src").getall()
+        if len(image) == 0:
+            image = 'No image'
+
         reactions = response.xpath("//div[@class='col-xs-12 col-sm-7']/a[@id='comment-count']/text()").get()
+
         author = response.xpath("//div[@class='col-xs-12 col-sm-7']/a[1]/text()").get()
+
+
         doctype = 'geenstijl.nl'
         url = response.url
+
         tags_list = response.xpath("//ul[@class='art-tags']/li/a/text()").getall()
         tags =', '.join(str(i) for i in tags_list)
 

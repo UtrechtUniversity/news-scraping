@@ -4,7 +4,8 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-import sqlite3
+# import sqlite3
+import mysql.connector
 
 
 class NewsScrapePipeline(object):
@@ -13,7 +14,13 @@ class NewsScrapePipeline(object):
         self.create_table()
 
     def create_connection(self):
-        self.conn =sqlite3.connect("scraped_news.db")
+        # self.conn =sqlite3.connect("scraped_news.db")
+        self.conn = mysql.connector.connect(
+            host='localhost',
+            user='root',
+            passwd='mydb01',
+            database='news'
+        )
         self.curr = self.conn.cursor()
 
     def create_table(self):
@@ -41,23 +48,24 @@ class NewsScrapePipeline(object):
         return item
 
     def store_db(self, item):
-        self.curr.execute("""insert into news_tb values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""", (
-            item['title'],
-            item['article_info'],
-            item['article_body'],
-            item['publication_date'],
-            item['publication_time'],
-            item['created_at'],
-            item['image'],
-            item['reactions'],
-            item['author'],
-            item['doctype'],
-            item['url'],
-            item['tags'],
-            item['twitter'],
-            item['facebook'],
-            item['iframe']
+        # self.curr.execute("""insert into news_tb values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""", (
+        self.curr.execute("""insert into news_tb values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+                          (
+                              item['title'],
+                              item['article_info'],
+                              item['article_body'],
+                              item['publication_date'],
+                              item['publication_time'],
+                              item['created_at'],
+                              item['image'][0],
+                              item['reactions'],
+                              item['author'],
+                              item['doctype'],
+                              item['url'],
+                              item['tags'],
+                              item['twitter'],
+                              item['facebook'],
+                              item['iframe']
 
-        ))
+                          ))
         self.conn.commit()
-
