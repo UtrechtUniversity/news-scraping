@@ -29,7 +29,7 @@ This project requires:
 ## Example usage 
 
 ``` sh
-scrapy crawl news
+scrapy crawl geenstijl
 ```
 
 ## Links 
