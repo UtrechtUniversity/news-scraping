@@ -1,7 +1,7 @@
 
 # geenstijl scraper
 
-Project to scrape news articles from geenstijl archieve of May.
+This project aims to scrape news articles from GeenStijl archieve (May 2020).
 Sample URL: https://www.geenstijl.nl/archieven/maandelijks/2020/05/
 
 ## Researcher & engineers
@@ -26,13 +26,13 @@ This project requires:
   pip install -r requirements.txt
   ```
 
-## Example usage 
+## Example usage
 
 ``` sh
 scrapy crawl geenstijl
 ```
 
-## Links 
+## Links
 
 - https://www.geenstijl.nl/
 
@@ -44,13 +44,13 @@ Scraper is expected to return the following keys:
 
 ```python
 %%html
-<style> 
+<style>
 table td, table th, table tr {text-align:left !important;}
 </style>
 ```
 
 
-<style> 
+<style>
 table td, table th, table tr {text-align:left !important;}
 </style>
 
