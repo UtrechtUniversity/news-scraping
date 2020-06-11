@@ -1,5 +1,5 @@
 
-# geenstijl scraper
+# GeenStijl scraper
 
 This project aims to scrape news articles from GeenStijl archieve (May 2020).
 Sample URL: https://www.geenstijl.nl/archieven/maandelijks/2020/05/
