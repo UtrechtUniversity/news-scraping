@@ -3,10 +3,22 @@
 
 # exclude data from source control by default
 /output
+/scraped_news.db
 
+connect to db.pdf
+instruction_connectdb_R.ipynb
+test/image/
+test/README-checkpoint.ipynb
+test/json_output/
+test/.ipynb_checkpoints
+test/README.ipynb
+test/test_db.py
 
 # Byte-compiled / optimized / DLL files
-__pycache__/
+*__pycache__*
+*.pyc
+
 
 # file: ~/.gitignore_global
 .idea/
+
