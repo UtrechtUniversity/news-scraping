@@ -26,6 +26,7 @@ class NewsScrapePipeline(object):
     def create_table(self):
         self.curr.execute("""Drop TABLE IF EXISTS news_tb""")
         self.curr.execute("""create table news_tb(
+                            article_id text,
                             title text,
                             article_info text,
                             article_body text,
@@ -49,15 +50,17 @@ class NewsScrapePipeline(object):
 
     def store_db(self, item):
         # self.curr.execute("""insert into news_tb values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""", (
-        self.curr.execute("""insert into news_tb values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+        self.curr.execute("""insert into news_tb values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
+        )""",
                           (
+                              item['article_id'],
                               item['title'],
                               item['article_info'],
                               item['article_body'],
                               item['publication_date'],
                               item['publication_time'],
                               item['created_at'],
-                              item['image'][0],
+                              item['image'],
                               item['reactions'],
                               item['author'],
                               item['doctype'],
