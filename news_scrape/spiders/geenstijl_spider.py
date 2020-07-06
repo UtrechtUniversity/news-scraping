@@ -1,15 +1,22 @@
 import scrapy
 import re
 import datetime
+from scrapy.spiders import CrawlSpider, Rule
+from scrapy.linkextractors import LinkExtractor
+from scrapy.selector import Selector
+
 from ..items import NewsScrapeItem
 # import logging
 
 
 # logging.basicConfig(filename='geenstij.log', level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s')
 class GeenstijSpider(scrapy.Spider):
+    """Scrapes Groenlinks"""
+
     name = 'geenstijl'
 
     start_urls = ['https://www.geenstijl.nl/archieven/maandelijks/2020/05/']
+
 
     # function to remove html tags, used for cleaning footer
     TAG_RE = re.compile(r'<[^>]+>')
@@ -42,10 +49,13 @@ class GeenstijSpider(scrapy.Spider):
         article_page_linkss = response.xpath('//div[@class]/ul[@class]/li/a/@ href').getall()
         article_page_links = article_page_linkss[::-1]
         yield from response.follow_all(article_page_links, self.parse_article)
+        # return [response.follow(start_url, self.parse_article) for start_url in article_page_links]
+
 
         # next_page = response.xpath("//a[@class='btn pull-right']/@href").get()
         # if next_page is not None:
         #     yield response.follow(next_page, callback=self.parse)
+
 
     def parse_article(self, response):
         # def extract_with_xpath(query):
@@ -76,7 +86,7 @@ class GeenstijSpider(scrapy.Spider):
             image_dict = {i: image[i] for i in range(0, len(image))}
             image_dict = str(image_dict)
         else:
-            image_dict = 'No image'
+            image_dict = None
         #
         # if len(image) == 0:
         #     image = 'None'
@@ -115,7 +125,6 @@ class GeenstijSpider(scrapy.Spider):
 
         yield items
 
-
 class DatabasePipeline(object):
 
     def __init__(self, db, user, passwd, host):
@@ -126,3 +135,7 @@ class DatabasePipeline(object):
 
     def process_item(self, item, spider):
         return item
+
+
+## TODO: 1- scrape in order
+## TODO: 2- iframes
