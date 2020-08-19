@@ -5,6 +5,8 @@
 /output
 /scraped_news.db
 /test
+log.txt
+/.scrapy
 
 connect to db.pdf
 instruction_connectdb_R.ipynb
