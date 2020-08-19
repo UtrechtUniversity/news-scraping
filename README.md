@@ -1,8 +1,8 @@
 
-# GeenStijl scraper
+# geenstijl scraper
 
-This project aims to scrape news articles from GeenStijl archieve (May 2020).
-Sample URL: https://www.geenstijl.nl/archieven/maandelijks/2020/05/
+Project aims to scrape news articles from geenstijl.nl.
+Sample URL: https://www.geenstijl.nl/
 
 ## Researcher & engineers
 
@@ -26,13 +26,13 @@ This project requires:
   pip install -r requirements.txt
   ```
 
-## Example usage
+## Example usage 
 
 ``` sh
 scrapy crawl geenstijl
 ```
 
-## Links
+## Links 
 
 - https://www.geenstijl.nl/
 
@@ -44,13 +44,13 @@ Scraper is expected to return the following keys:
 
 ```python
 %%html
-<style>
+<style> 
 table td, table th, table tr {text-align:left !important;}
 </style>
 ```
 
 
-<style>
+<style> 
 table td, table th, table tr {text-align:left !important;}
 </style>
 
@@ -60,12 +60,13 @@ table td, table th, table tr {text-align:left !important;}
 
 | Key | Data type|Description |Example|
 | --- | --- |--- | --- |
-|article_id| string | The unique id of articles ||
+|id| string | The unique id of articles ||
 |title|string |Title of the article|Schouten maakt klimaatcomplot van corona|
-|article_info|string|A short paragraph between title and text|Meer sparerib distancing!|
-|article_body|string| The full text of the document|
-|created_at|datetime object |date and time of scraping|2020-06-07 03:24:15|
-|image|string | List of the image urls|
+|teaser|string|A short paragraph between title and text|Meer sparerib distancing!|
+|text|string| The full text of the document|\n \n \n \n Wakker, dieren? Hi...|
+|category|string| News section if any||
+|created_at|datetime object |Date and time of scraping|2020-06-07 03:24:15|
+|image|string | Dictionary of the image urls|
 |reactions|string |Number of reactions to each article|396 reacties|
 |author|string |Author|@Van Rossem|
 |publication_time|string | Time of publication|08:37	|
@@ -73,9 +74,8 @@ table td, table th, table tr {text-align:left !important;}
 |doctype	|string | Source of the news| geenstijl.nl|
 |url|string |URL to the article|https://www.geenstijl.nl/5153232/schouten-maak...|
 |tags|string |List of tags|stikstof, klimaat, quatsch|
-|twitter|string |Twitter link|https://www.twitter.com/intent/tweet?text=Scho...|
-|facebook|string |Facebook link|https://www.facebook.com/sharer/sharer.php?u=h...|
-|iframe|string |Iframe video links |
+|sitemap_url|string |Link to the site's sitemap if any||
+
 
 
 ```python
