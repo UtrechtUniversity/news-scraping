@@ -3,3 +3,4 @@ re
 datetime
 mysql
 pandas
+scrapy-deltafetch
