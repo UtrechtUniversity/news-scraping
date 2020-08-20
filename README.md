@@ -1,5 +1,5 @@
 
-# geenstijl scraper
+# GeenStijl scraper
 
 Project aims to scrape news articles from geenstijl.nl.
 Sample URL: https://www.geenstijl.nl/
