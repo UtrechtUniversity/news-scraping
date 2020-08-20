@@ -60,21 +60,21 @@ table td, table th, table tr {text-align:left !important;}
 
 | Key | Data type|Description |Example|
 | --- | --- |--- | --- |
-|id| string | The unique id of articles ||
-|title|string |Title of the article|Schouten maakt klimaatcomplot van corona|
-|teaser|string|A short paragraph between title and text|Meer sparerib distancing!|
-|text|string| The full text of the document|\n \n \n \n Wakker, dieren? Hi...|
-|category|string| News section if any||
-|created_at|datetime object |Date and time of scraping|2020-06-07 03:24:15|
-|image|string | Dictionary of the image urls|
-|reactions|string |Number of reactions to each article|396 reacties|
-|author|string |Author|@Van Rossem|
-|publication_time|string | Time of publication|08:37	|
-|publication_date|string |Date of publication, format: dd-mm-yy|01-05-20|
+|id| string | The unique id of articles |a5154933|
+|title|string |Title of the article|RIVM UPDATE: Deze week +4013 besmettingen|
+|teaser|string|A short paragraph between title and text|Aantal nieuwe besmettingen STABILISEERT|
+|text|string| The full text of the document|U mag kiezen:Optie 1:...|
+|category|string| News section if any| null|
+|created_at|datetime object |Date and time of scraping|2020-08-19 16:39:35|
+|image|string | Dictionary of the image urls|{0: ''https://image.gscdn.nl/image/5f8b9b2526_Schermafbeelding... |
+|reactions|string |Number of reactions to each article|308 reacties|
+|author|string |Author|@Ronaldo|
+|publication_time|string | Time of publication|14:20|
+|publication_date|string |Date of publication, format: dd-mm-yy|18-08-20|
 |doctype	|string | Source of the news| geenstijl.nl|
-|url|string |URL to the article|https://www.geenstijl.nl/5153232/schouten-maak...|
-|tags|string |List of tags|stikstof, klimaat, quatsch|
-|sitemap_url|string |Link to the site's sitemap if any||
+|url|string |URL to the article|https://www.geenstijl.nl/5154933/rivm-update-deze-week-4013-besmettingen/|
+|tags|string |List of tags|corona, rivm|
+|sitemap_url|string |Link to the site's sitemap if any|https://www.geenstijl.nl/sitemap.xml|
 
 
 
