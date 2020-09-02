@@ -10,6 +10,7 @@ logging.basicConfig(
     level=logging.ERROR
 )
 
+
 class NuSpider(SitemapSpider):
     name = 'nu'
     sitemap_urls = ['https://www.nu.nl/sitemap_news.xml']
@@ -20,54 +21,91 @@ class NuSpider(SitemapSpider):
         line = re.sub("\n", "", line)
         return line
 
-
-
     def parse(self, response):
         logging.info('Parse function called on %s', response.url)
 
-        id = response.url.split('/')[-2]
+        # Extract article unique id
+        try:
+            id = response.url.split('/')[-2]
+        except AttributeError:
+            id = None
 
-        title = response.xpath("//h1[@class]/text()").extract_first()
+        try:
+            title = response.xpath("//h1[@class]/text()").extract_first()
+        except AttributeError:
+            title = None
 
-        teaser = None
+        try:
+            teaser = None
+        except AttributeError:
+            teaser = None
 
-        article_body = response.xpath("//div[@id]/div[@class='block-wrapper']/div[@class='block-content']//text()["
-                                      "not(ancestor::span)]").extract()
-        article_body_str = ''.join(str(e) for e in article_body)
-        text = self.clean(article_body_str)
+        try:
+            article_body = response.xpath("//div[@id]/div[@class='block-wrapper']/div[@class='block-content']//text()["
+                                          "not(ancestor::span)]").extract()
+            article_body_str = ''.join(str(e) for e in article_body)
+            text = self.clean(article_body_str)
+        except AttributeError:
+            text = None
 
-        category = response.xpath("//body/@data-section").extract_first()
+        try:
+            category = response.xpath("//body/@data-section").extract_first()
+        except AttributeError:
+            category = None
 
-        date_time = response.xpath("//span[@class='pubdate large']/text()").extract_first()
-        publication_date = date_time[:-6]
-        publication_time = date_time[-6:]
+        try:
+            date_time = response.xpath("//span[@class='pubdate large']/text()").extract_first()
+            publication_date = date_time[:-6]
+        except AttributeError:
+            publication_date = None
 
-        created_at = datetime.datetime.now()
+        try:
+            publication_time = date_time[-6:]
+        except AttributeError:
+            publication_time = None
 
-        header_image = response.xpath("//*[@id]/div/div/div[1]/figure/img/@data-src").extract()
-        image_list = response.xpath("//div[@class='block-image']/img[@class='lazy-unveil']/@data-src").extract()
-        images = image_list + header_image
-        if len(images) != 0:
-            image_dict = {i: images[i] for i in range(0, len(images))}
-            image_dict = str(image_dict)
-        else:
+        try:
+            created_at = datetime.datetime.now()
+        except AttributeError:
+            created_at = None
+
+        try:
+            header_image = response.xpath("//*[@id]/div/div/div[1]/figure/img/@data-src").extract()
+            image_list = response.xpath("//div[@class='block-image']/img[@class='lazy-unveil']/@data-src").extract()
+            images = image_list + header_image
+            if len(images) != 0:
+                image_dict = {i: images[i] for i in range(0, len(images))}
+                image_dict = str(image_dict)
+            else:
+                image_dict = None
+        except AttributeError:
             image_dict = None
 
-        reactions = response.xpath("//div/div/span/a/span/text()").extract_first()
+        try:
+            reactions = response.xpath("//div/div/span/a/span/text()").extract_first()
+        except AttributeError:
+            reactions = None
 
-        author_name = response.xpath("//span[@class='author']/text()").extract_first()
-        author = self.clean(author_name)
+        try:
+            author_name = response.xpath("//span[@class='author']/text()").extract_first()
+            author = self.clean(author_name)
+        except AttributeError:
+            author = None
 
         doctype = 'nu.nl'
 
-        url = response.url
+        try:
+            url = response.url
+        except AttributeError:
+            url = None
 
-        tags_list = response.xpath("//div[@class='tags']/a[@class]/span/text()").extract()
-        tags = ', '.join(str(i) for i in tags_list)
+        try:
+            tags_list = response.xpath("//div[@class='tags']/a[@class]/span/text()").extract()
+            tags = ', '.join(str(i) for i in tags_list)
+        except AttributeError:
+            tags = None
 
         sitemap_url = "https://www.nu.nl/sitemap_news.xml"
-
-
 
         items = NewsScrapeItem()
         items['id'] = id                              # 1- unique id
@@ -99,5 +137,3 @@ class DatabasePipeline(object):
 
     def process_item(self, item, spider):
         return item
-
-
