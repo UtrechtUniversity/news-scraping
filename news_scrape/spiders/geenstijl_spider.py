@@ -13,7 +13,7 @@ from ..items import NewsScrapeItem
 class GeenstijSpider(scrapy.Spider):
     """Scrapes Groenlinks"""
 
-    name = 'geenstijl'
+    name = 'geen'
 
     start_urls = ['https://www.geenstijl.nl/archieven/maandelijks/2020/05/']
 
