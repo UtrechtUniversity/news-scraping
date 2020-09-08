@@ -13,7 +13,7 @@ logging.basicConfig(
 )
 
 class GeenstijlSpider(SitemapSpider):
-    name = 'geenstijq'
+    name = 'geenstijl'
     sitemap_urls = ['https://www.geenstijl.nl/sitemap.xml']
 
     TAG_RE = re.compile(r'<[^>]+>')
