@@ -1,8 +1,8 @@
 
 # GeenStijl scraper
 
-Project aims to scrape news articles from geenstijl.nl.
-Sample URL: https://www.geenstijl.nl/
+Project aims to scrape news articles from geenstijl.nl and nu.nl.
+Sample URLs: https://www.geenstijl.nl/, https://www.nu.nl/
 
 ## Researcher & engineers
 
@@ -30,11 +30,14 @@ This project requires:
 
 ``` sh
 scrapy crawl geenstijl
+scrapy crawl nu
+
 ```
 
 ## Links 
 
 - https://www.geenstijl.nl/
+- https://www.nu.nl/
 
 ## Specifications
 Scraper is expected to return the following keys:
