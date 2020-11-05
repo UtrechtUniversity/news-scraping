@@ -25,7 +25,6 @@ class NuSpider(SitemapSpider):
     sitemap_urls = ['https://www.nu.nl/sitemap_news.xml']
     TAG_RE = re.compile(r'<[^>]+>')
 
-
     # def __init__(self, *args, **kwargs):
     #     logger = logging.getLogger('scrapy.spidermiddlewares.httperror')
     #     logger.setLevel(logging.ERROR)
@@ -41,7 +40,6 @@ class NuSpider(SitemapSpider):
 
     def remove_tags(self, text):
         return self.TAG_RE.sub(' ', text)
-
 
     def parse(self, response):
         logging.info('Parse function called on %s', response.url)
