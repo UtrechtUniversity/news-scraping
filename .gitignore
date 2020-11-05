@@ -8,6 +8,7 @@
 log.txt
 /.scrapy
 
+
 connect to db.pdf
 instruction_connectdb_R.ipynb
 test/image/
@@ -20,7 +21,8 @@ test/test_db.py
 # Byte-compiled / optimized / DLL files
 *__pycache__*
 *.pyc
-
+*.whl
+*.bat
 
 # file: ~/.gitignore_global
 .idea/
