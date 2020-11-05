@@ -59,10 +59,12 @@ class GeenstijlSpider(SitemapSpider):
         footer = self.remove_tags(response.xpath("//div[@class='art-footer']/div[@class='col-xs-12 col-sm-7']").get())
         footer_clean = self.clean(footer)
         date = self.date_func(footer_clean)
-        publication_date = ''.join(str(e) for e in date)
+        date_str = ''.join(str(e) for e in date)
+        publication_date = datetime.datetime.strptime(date_str, '%d-%m-%y')
 
         time = self.time_func(footer_clean)
-        publication_time = ''.join(str(e) for e in time)
+        time_str = ''.join(str(e) for e in time)
+        publication_time = datetime.datetime.strptime(time_str, '%H:%M')
 
         created_at = datetime.datetime.now()
 
