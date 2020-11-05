@@ -80,12 +80,15 @@ class NuSpider(SitemapSpider):
 
             try:
                 date_time = response.xpath("//span[@class='pubdate large']/text()").extract_first()
-                publication_date = date_time[:-6]
+                dtObject = datetime.datetime.strptime(date_time, "%d %B %Y %H:%M")
+                publication_date = dtObject.date()
+                # publication_date = date_time[:-6]
             except AttributeError:
                 publication_date = None
 
             try:
-                publication_time = date_time[-6:]
+                # publication_time = date_time[-6:]
+                publication_time = dtObject.time()
             except AttributeError:
                 publication_time = None
 
