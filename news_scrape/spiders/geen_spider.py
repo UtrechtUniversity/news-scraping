@@ -12,6 +12,7 @@ logging.basicConfig(
     level=logging.ERROR
 )
 
+
 class GeenstijlSpider(SitemapSpider):
     name = 'geenstijl'
     sitemap_urls = ['https://www.geenstijl.nl/sitemap.xml']
@@ -72,7 +73,6 @@ class GeenstijlSpider(SitemapSpider):
         else:
             image_dict = None
 
-
         reactions = response.xpath("//div[@class='col-xs-12 col-sm-7']/a[@id='comment-count']/text()").get()
 
         author = response.xpath("//div[@class='col-xs-12 col-sm-7']/a[1]/text()").get()
@@ -85,7 +85,6 @@ class GeenstijlSpider(SitemapSpider):
         tags = ', '.join(str(i) for i in tags_list)
 
         sitemap_url = "https://www.geenstijl.nl/sitemap.xml"
-
 
         items = NewsScrapeItem()
         items['id'] = id                                # 1- unique id
@@ -106,6 +105,7 @@ class GeenstijlSpider(SitemapSpider):
         items['publication_time'] = publication_time    # 16- time of publication
 
         yield items
+
 
 class DatabasePipeline(object):
 
