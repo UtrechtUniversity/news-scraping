@@ -3,15 +3,7 @@ from ..items import NewsScrapeItem
 import re
 import datetime
 import logging
-from scrapy.utils.log import configure_logging
 
-# configure_logging(install_root_handler=False)
-# logging.basicConfig(
-#     filename='log_error.txt',
-#     filemode = 'a',
-#     format='%(levelname)s: %(message)s',
-#     level=logging.ERROR
-# )
 
 logging.basicConfig(
     filename='log.txt',
@@ -24,11 +16,6 @@ class NuSpider(SitemapSpider):
     name = 'nu'
     sitemap_urls = ['https://www.nu.nl/sitemap_news.xml']
     TAG_RE = re.compile(r'<[^>]+>')
-
-    # def __init__(self, *args, **kwargs):
-    #     logger = logging.getLogger('scrapy.spidermiddlewares.httperror')
-    #     logger.setLevel(logging.ERROR)
-    #     super().__init__(*args, **kwargs)
 
     # Function for removing newline tags, used in cleaning news body
     def clean(self, line):
@@ -65,8 +52,7 @@ class NuSpider(SitemapSpider):
             try:
                 article_body = response.xpath("//div[@class='block-content']/p | //div[@class='block-content']/h2"
                                               " | //div[@class='block-content']/h3| //div[@class='inner']").extract()
-                # article_body = response.xpath("//div[@id]/div[@class='block-wrapper']/div[@class='block-content']//text()["
-                #                               "not(ancestor::span)]").extract()
+
                 article_body_str = ''.join(str(e) for e in article_body)
                 text = self.clean(article_body_str)
                 text = self.remove_tags(text)
@@ -82,17 +68,8 @@ class NuSpider(SitemapSpider):
                 date_time = response.xpath("//span[@class='pubdate large']/text()").extract_first()
                 publication_date_time = datetime.datetime.strptime(date_time, "%d %B %Y %H:%M")
 
-                # dtObject = datetime.datetime.strptime(date_time, "%d %B %Y %H:%M")
-                # publication_date = dtObject.date()
-                # publication_date = date_time[:-6]
             except AttributeError:
                 publication_date = None
-
-            # try:
-            #     # publication_time = date_time[-6:]
-            #     publication_time = dtObject.time()
-            # except AttributeError:
-            #     publication_time = None
 
             try:
                 created_at = datetime.datetime.now()
@@ -152,7 +129,6 @@ class NuSpider(SitemapSpider):
             items['created_at'] = created_at  # 12- date and time of scraping
             items['sitemap_url'] = sitemap_url  # 13- url of feed if any
             items['publication_date_time'] = publication_date_time  # 14- date of publication
-            # items['publication_time'] = publication_time  # 15- time of publication
 
             yield items
 
