@@ -80,17 +80,19 @@ class NuSpider(SitemapSpider):
 
             try:
                 date_time = response.xpath("//span[@class='pubdate large']/text()").extract_first()
-                dtObject = datetime.datetime.strptime(date_time, "%d %B %Y %H:%M")
-                publication_date = dtObject.date()
+                publication_date_time = datetime.datetime.strptime(date_time, "%d %B %Y %H:%M")
+
+                # dtObject = datetime.datetime.strptime(date_time, "%d %B %Y %H:%M")
+                # publication_date = dtObject.date()
                 # publication_date = date_time[:-6]
             except AttributeError:
                 publication_date = None
 
-            try:
-                # publication_time = date_time[-6:]
-                publication_time = dtObject.time()
-            except AttributeError:
-                publication_time = None
+            # try:
+            #     # publication_time = date_time[-6:]
+            #     publication_time = dtObject.time()
+            # except AttributeError:
+            #     publication_time = None
 
             try:
                 created_at = datetime.datetime.now()
@@ -149,8 +151,8 @@ class NuSpider(SitemapSpider):
             items['reactions'] = reactions  # 11- number of reactions
             items['created_at'] = created_at  # 12- date and time of scraping
             items['sitemap_url'] = sitemap_url  # 13- url of feed if any
-            items['publication_date'] = publication_date  # 14- date of publication
-            items['publication_time'] = publication_time  # 15- time of publication
+            items['publication_date_time'] = publication_date_time  # 14- date of publication
+            # items['publication_time'] = publication_time  # 15- time of publication
 
             yield items
 
