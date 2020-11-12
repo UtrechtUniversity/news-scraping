@@ -62,11 +62,20 @@ class GeenstijlSpider(SitemapSpider):
         date_str = ''.join(str(e) for e in date)
         publication_date = datetime.datetime.strptime(date_str, '%d-%m-%y')
         publication_date = publication_date.date()
+        d = publication_date.strftime("%Y-%m-%d")
+        # publication_date = datetime.datetime.strptime(date_str, '%d-%m-%y')
+        # publication_date = publication_date.date()
 
         time = self.time_func(footer_clean)
         time_str = ''.join(str(e) for e in time)
         publication_time = datetime.datetime.strptime(time_str, '%H:%M')
         publication_time = publication_time.time()
+        t = publication_time.strftime("%H:%M:%S")
+
+        date_time = d + ' ' + t
+        publication_date_time = datetime.datetime.strptime(date_time, "%Y-%m-%d %H:%M:%S")
+        # publication_time = datetime.datetime.strptime(time_str, '%H:%M')
+        # publication_time = publication_time.time()
 
         created_at = datetime.datetime.now()
 
@@ -105,8 +114,8 @@ class GeenstijlSpider(SitemapSpider):
         items['created_at'] = created_at                # 12- date and time of scraping
         # items['htmlsource'] = htmlsource                # 13- the raw html code
         items['sitemap_url'] = sitemap_url              # 14- url of feed if any
-        items['publication_date'] = publication_date    # 15- date of publication
-        items['publication_time'] = publication_time    # 16- time of publication
+        items['publication_date_time'] = publication_date_time    # 15- date of publication
+        # items['publication_time'] = publication_time    # 16- time of publication
 
         yield items
 
