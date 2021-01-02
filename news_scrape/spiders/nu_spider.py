@@ -71,6 +71,15 @@ class NuSpider(SitemapSpider):
             # *** Extract publication date and time ***
             try:
                 date_time = response.xpath("//span[@class='pubdate large']/text()").extract_first()
+                # Turn Dutch month to English month name
+                date_time = date_time.replace('januari', 'january')
+                date_time = date_time.replace('februari', 'february')
+                date_time = date_time.replace('maart', 'march')
+                date_time = date_time.replace('mei', 'may')
+                date_time = date_time.replace('juni', 'june')
+                date_time = date_time.replace('juli', 'july')
+                date_time = date_time.replace('augustus', 'august')
+                date_time = date_time.replace('oktober', 'october')
                 publication_date_time = datetime.datetime.strptime(date_time, "%d %B %Y %H:%M")
 
             except AttributeError:
