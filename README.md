@@ -7,11 +7,12 @@ Sample URLs: https://www.geenstijl.nl/, https://www.nu.nl/
 ## Researcher & engineers
 
 Researchers:
+- Frank van Tubergen
 
-- Tubergen, F.A. van (Frank)
+Project Manager:
+- Laurence Frank
 
 Data Engineers:
-
 - Vos, M.G. de (Martine)
 - Shiva Nadi Najafabadi
 
