@@ -6,7 +6,7 @@ Sample URLs: https://www.geenstijl.nl/, https://www.nu.nl/
 
 ## Researcher & engineers
 
-Researchers:
+Researcher:
 - Frank van Tubergen
 
 Project Manager:
