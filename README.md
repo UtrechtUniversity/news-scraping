@@ -13,8 +13,8 @@ Project Manager:
 - Laurence Frank
 
 Data Engineers:
-- Vos, M.G. de (Martine)
-- Shiva Nadi Najafabadi
+- Shiva Nadi
+- Martine de vos
 
 ## Installation
 
