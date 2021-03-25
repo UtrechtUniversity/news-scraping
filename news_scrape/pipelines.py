@@ -10,21 +10,20 @@ class NewsScrapePipeline(object):
     def create_connection(self):
         self.conn = mysql.connector.connect(
             host='localhost',
-            user='root',
-            passwd='mydb01',
-            database='new_test'
+            user='news_scrape',
+            passwd='yt9AqrEp2LHA39tkeFwYwA==',
+            database='news_scrape'
         )
         self.curr = self.conn.cursor()
 
     def create_table(self):
-        self.curr.execute("""CREATE TABLE IF NOT EXISTS testnew_tb(
+        self.curr.execute("""CREATE TABLE IF NOT EXISTS news_table(
                             id text,
                             title text,
                             teaser text,
                             text text,
                             category text,
-                            publication_date text,
-                            publication_time text,
+                            publication_date_time datetime,
                             created_at datetime,
                             images text,
                             reactions text,
@@ -40,7 +39,7 @@ class NewsScrapePipeline(object):
         return item
 
     def store_db(self, item):
-        self.curr.execute("""insert into testnew_tb values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
+        self.curr.execute("""insert into news_table values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
         %s, %s
         )""",
                           (
@@ -49,8 +48,7 @@ class NewsScrapePipeline(object):
                               item['teaser'],
                               item['text'],
                               item['category'],
-                              item['publication_date'],
-                              item['publication_time'],
+                              item['publication_date_time'],
                               item['created_at'],
                               item['images'],
                               item['reactions'],

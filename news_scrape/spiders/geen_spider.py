@@ -12,6 +12,7 @@ logging.basicConfig(
     level=logging.ERROR
 )
 
+
 class GeenstijlSpider(SitemapSpider):
     name = 'geenstijl'
     sitemap_urls = ['https://www.geenstijl.nl/sitemap.xml']
@@ -44,48 +45,104 @@ class GeenstijlSpider(SitemapSpider):
     def parse(self, response):
         logging.info('Parse function called on %s', response.url)
 
-        id = response.xpath("//div[@class='main_content col-xs-12 col-sm-7']/article/@id").get()
+        # *** Extract article's unique id ***
+        try:
+            id = response.xpath("//div[@class='main_content col-xs-12 col-sm-7']/article/@id").get()
+        except AttributeError:
+            id = None
 
-        title = response.xpath("//div[@class='col-xs-12']/h1/text()").get()
+        # *** Extract news title ***
+        try:
+            title = response.xpath("//div[@class='col-xs-12']/h1/text()").get()
+        except AttributeError:
+            title = None
 
-        teaser = response.xpath("//div[@class='article-intro']/p/text()").get()
+        # *** Extract teaser- A short abstract between title and body ***
+        try:
+            teaser = response.xpath("//div[@class='article-intro']/p/text()").get()
+        except AttributeError:
+            teaser = None
 
-        article_body = response.xpath("//div[@class='article_content']/p//text()").getall()
-        text = ''.join(str(e) for e in article_body)
+        # *** Extract article body ***
+        try:
+            article_body = response.xpath("//div[@class='article_content']/p//text()").getall()
+            text = ''.join(str(e) for e in article_body)
+        except AttributeError:
+            text = None
 
+        # *** There is no article category for geenstijl articles ***
         category = None
 
-        footer = self.remove_tags(response.xpath("//div[@class='art-footer']/div[@class='col-xs-12 col-sm-7']").get())
-        footer_clean = self.clean(footer)
-        date = self.date_func(footer_clean)
-        publication_date = ''.join(str(e) for e in date)
+        # *** Extract publication date and time ***
+        try:
+            # Extract footer
+            footer = self.remove_tags(response.xpath("//div[@class='art-footer']/div[@class='col-xs-12 col-sm-7']").get())
+            footer_clean = self.clean(footer)
+            # Extract date
+            date = self.date_func(footer_clean)
+            date_str = ''.join(str(e) for e in date)
+            publication_date = datetime.datetime.strptime(date_str, '%d-%m-%y')
+            publication_date = publication_date.date()
+            d = publication_date.strftime("%Y-%m-%d")
+            # Extract time
+            time = self.time_func(footer_clean)
+            time_str = ''.join(str(e) for e in time)
+            publication_time = datetime.datetime.strptime(time_str, '%H:%M')
+            publication_time = publication_time.time()
+            t = publication_time.strftime("%H:%M:%S")
+            # Join date and time and change type to datetime
+            date_time = d + ' ' + t
+            publication_date_time = datetime.datetime.strptime(date_time, "%Y-%m-%d %H:%M:%S")
+        except AttributeError:
+            publication_date_time = None
 
-        time = self.time_func(footer_clean)
-        publication_time = ''.join(str(e) for e in time)
+        # *** Extract scraping date and time ***
+        try:
+            created_at = datetime.datetime.now()
+        except AttributeError:
+            created_at = None
 
-        created_at = datetime.datetime.now()
-
-        images = response.xpath("//div[@class='article_content']/*/img/@src").getall()
-        if len(images) != 0:
-            image_dict = {i: images[i] for i in range(0, len(images))}
-            image_dict = str(image_dict)
-        else:
+        # *** Extract link to images ***
+        try:
+            images = response.xpath("//div[@class='article_content']/*/img/@src").getall()
+            if len(images) != 0:
+                image_dict = {i: images[i] for i in range(0, len(images))}
+                image_dict = str(image_dict)
+            else:
+                image_dict = None
+        except AttributeError:
             image_dict = None
 
+        # *** Extract number of reactions to the article ***
+        try:
+            reactions = response.xpath("//div[@class='col-xs-12 col-sm-7']/a[@id='comment-count']/text()").get()
+        except AttributeError:
+            reactions = None
 
-        reactions = response.xpath("//div[@class='col-xs-12 col-sm-7']/a[@id='comment-count']/text()").get()
+        # *** Extract author name ***
+        try:
+            author = response.xpath("//div[@class='col-xs-12 col-sm-7']/a[1]/text()").get()
+        except AttributeError:
+            author = None
 
-        author = response.xpath("//div[@class='col-xs-12 col-sm-7']/a[1]/text()").get()
-
+        # *** News resource ***
         doctype = 'geenstijl.nl'
 
-        url = response.url
+        # *** News URL ***
+        try:
+            url = response.url
+        except AttributeError:
+            url = None
 
-        tags_list = response.xpath("//ul[@class='art-tags']/li/a/text()").getall()
-        tags = ', '.join(str(i) for i in tags_list)
+        # *** Extract tags ***
+        try:
+            tags_list = response.xpath("//ul[@class='art-tags']/li/a/text()").getall()
+            tags = ', '.join(str(i) for i in tags_list)
+        except AttributeError:
+            tags = None
 
+        # *** Most updated news are extracted from sitemap, this is the link to the nu.nl sitemap ***
         sitemap_url = "https://www.geenstijl.nl/sitemap.xml"
-
 
         items = NewsScrapeItem()
         items['id'] = id                                # 1- unique id
@@ -100,12 +157,11 @@ class GeenstijlSpider(SitemapSpider):
         items['images'] = image_dict                    # 10- dictionary of images
         items['reactions'] = reactions                  # 11- number of reactions
         items['created_at'] = created_at                # 12- date and time of scraping
-        # items['htmlsource'] = htmlsource                # 13- the raw html code
-        items['sitemap_url'] = sitemap_url              # 14- url of feed if any
-        items['publication_date'] = publication_date    # 15- date of publication
-        items['publication_time'] = publication_time    # 16- time of publication
+        items['sitemap_url'] = sitemap_url              # 13- url of feed if any
+        items['publication_date_time'] = publication_date_time    # 14- date and time of publication
 
         yield items
+
 
 class DatabasePipeline(object):
 

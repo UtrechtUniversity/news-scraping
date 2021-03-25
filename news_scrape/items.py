@@ -24,5 +24,5 @@ class NewsScrapeItem(scrapy.Item):
     created_at = scrapy.Field()
     htmlsource = scrapy.Field()
     sitemap_url = scrapy.Field()
-    publication_date = scrapy.Field()
-    publication_time = scrapy.Field()
+    publication_date_time = scrapy.Field()
+    # publication_time = scrapy.Field()

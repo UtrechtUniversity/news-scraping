@@ -1,5 +1,4 @@
 scrapy
-re
 datetime
 mysql
 pandas
