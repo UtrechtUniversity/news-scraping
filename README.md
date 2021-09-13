@@ -1,7 +1,8 @@
 
 # GeenStijl scraper
 
-Project aims to scrape news articles from geenstijl.nl and nu.nl.
+Project aims to scrape all news articles for the two online only news sources 'Nu.nl' and 'GeenStijl.nl'. Online news will be collected on a daily basis from websites' sitemaps. Using scrapy-deltafetch middelware in python we ignore requests to the pages containing items seen in previous crawls of the same spider which leads to producing a delta crawl containing only new items. 
+
 Sample URLs: https://www.geenstijl.nl/, https://www.nu.nl/
 
 ## Researcher & engineers
