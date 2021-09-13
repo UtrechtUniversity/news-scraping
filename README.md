@@ -1,7 +1,7 @@
 
 # GeenStijl scraper
 
-Project aims to scrape all news articles for the two online only news sources 'Nu.nl' and 'GeenStijl.nl'. Online news will be collected on a daily basis from websites' sitemaps. Using scrapy-deltafetch middelware in python we ignore requests to the pages containing items seen in previous crawls of the same spider which leads to producing a delta crawl containing only new items. 
+Project aims to scrape all news articles from the two online only news sources 'Nu.nl' and 'GeenStijl.nl'. Online news will be collected on a daily basis from websites' sitemaps. Using scrapy-deltafetch middelware in python we ignore requests to the pages containing items seen in previous crawls of the same spider which leads to producing a delta crawl containing only new items. 
 
 Sample URLs: https://www.geenstijl.nl/, https://www.nu.nl/
 
@@ -23,7 +23,7 @@ Project Manager:
 This project requires:
   - Python 3.7 or higher
   - MySQL 8.0.20 or higher
-  -  Install the dependencies with the code below
+  - Install the dependencies with the code below
 
   ```sh
   pip install -r requirements.txt
