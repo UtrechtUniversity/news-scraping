@@ -6,15 +6,16 @@ Sample URLs: https://www.geenstijl.nl/, https://www.nu.nl/
 
 ## Researcher & engineers
 
+Data Engineers:
+- Shiva Nadi
+- Martine de Vos
+
 Researcher:
 - Frank van Tubergen
 
 Project Manager:
 - Laurence Frank
 
-Data Engineers:
-- Shiva Nadi
-- Martine de vos
 
 ## Installation
 
