@@ -1,10 +1,15 @@
+﻿
+# News scraper
 
-# GeenStijl scraper
+Project aims to scrape all news articles from the two online only news sources 'Nu.nl' and 'GeenStijl.nl'. Online news will be collected on a daily basis from websites' sitemaps. Using scrapy-deltafetch middelware in python we ignore requests to the pages containing items seen in previous crawls of the same spider which leads to producing a delta crawl containing only new items. 
 
-Project aims to scrape news articles from geenstijl.nl and nu.nl.
 Sample URLs: https://www.geenstijl.nl/, https://www.nu.nl/
 
 ## Researcher & engineers
+
+Data Engineers:
+- Shiva Nadi
+- Martine de Vos
 
 Researcher:
 - Frank van Tubergen
@@ -12,16 +17,13 @@ Researcher:
 Project Manager:
 - Laurence Frank
 
-Data Engineers:
-- Vos, M.G. de (Martine)
-- Shiva Nadi Najafabadi
 
 ## Installation
 
 This project requires:
   - Python 3.7 or higher
   - MySQL 8.0.20 or higher
-  -  Install the dependencies with the code below
+  - Install the dependencies with the code below
 
   ```sh
   pip install -r requirements.txt
@@ -64,20 +66,21 @@ table td, table th, table tr {text-align:left !important;}
 
 | Key | Data type|Description |Example|
 | --- | --- |--- | --- |
-|Id| string | The unique identifier number of articles |a5156375|
-|title|string |Title of the article|Stemcomputers stemmen in het Stamcafé|
-|teaser|string|A short paragraph between title and text|Stemmen. Als een hele kleine viool|
-|text|string| The body text of the news article|Weet je wat echt beroerd is voor het vertrouwen ...|
-|category|string| News section if any| Null|
-|publication_date_time|datetime object |Date and time of publication|2020-11-17 21:55:00|
-|created_at|datetime object|Date and time of scraping|2020-11-17 23:00:06|
-|images|string | Dictionary of the image urls if any|Null |
-|reactions|string |Number of reactions to each article|202 reacties|
-|author|string |Author|@Van Rossem|
+|id| string | The unique id of articles |a5154933|
+|title|string |Title of the article|RIVM UPDATE: Deze week +4013 besmettingen|
+|teaser|string|A short paragraph between title and text|Aantal nieuwe besmettingen STABILISEERT|
+|text|string| The full text of the document|U mag kiezen:Optie 1:...|
+|category|string| News section if any| null|
+|created_at|datetime object |Date and time of scraping|2020-08-19 16:39:35|
+|image|string | Dictionary of the image urls|{0: ''https://image.gscdn.nl/image/5f8b9b2526_Schermafbeelding... |
+|reactions|string |Number of reactions to each article|308 reacties|
+|author|string |Author|@Ronaldo|
+|publication_time|string | Time of publication|14:20|
+|publication_date|string |Date of publication, format: dd-mm-yy|18-08-20|
 |doctype	|string | Source of the news| geenstijl.nl|
-|url|string |URL to the article|https://www.geenstijl.nl/5156375/stemcomputers-stemmen-in-het-stamcafe/|
-|tags|string |List of tags|stamcafe, stemcomputers, stemmen|
-|sitemap_url|string |Link to the website's sitemap if any|https://www.geenstijl.nl/sitemap.xml|
+|url|string |URL to the article|https://www.geenstijl.nl/5154933/rivm-update-deze-week-4013-besmettingen/|
+|tags|string |List of tags|corona, rivm|
+|sitemap_url|string |Link to the site's sitemap if any|https://www.geenstijl.nl/sitemap.xml|
 
 
 
