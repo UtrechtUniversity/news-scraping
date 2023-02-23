@@ -9,7 +9,6 @@ Sample URLs: https://www.geenstijl.nl/, https://www.nu.nl/
 
 Data Engineers:
 - Shiva Nadi
-- Martine de Vos
 
 Researcher:
 - Frank van Tubergen
