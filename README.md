@@ -16,6 +16,9 @@ Researcher:
 Project Manager:
 - Laurence Frank
 
+Project Consultant:
+- Martine de Vos
+
 
 ## Installation
 
